@@ -1,64 +1,50 @@
-# 📚 MetaCraft Pro
+# MetaCraft Pro
 
-**An Agentic Metadata & Schema Generator for Libraries**
+MetaCraft Pro is an agentic schema and metadata generation system designed for libraries. It supports public, academic, and research libraries by generating structured metadata schemas from plain language collection or program goals. The system leverages large language models (LLMs), natural language processing (spaCy), and transparent rule-based logic to translate prompts into BigQuery schemas, JSON schema, or ElasticSearch mappings.
 
-MetaCraft Pro is a production-grade, agent-powered metadata tool designed for public, academic, and research libraries navigating the evolving role of generative AI and large language models (LLMs). It translates natural language goals into structured metadata schemas for collection development, digital programs, civic feedback, and more.
+MetaCraft Pro is part of a broader suite of open tools supporting library-facing use of AI and agents for metadata, discovery, digital collections, and community information work.
 
-Using advanced agents built on LLMs, NLP, and transparent rule-based logic, MetaCraft helps library staff define, refine, and deploy metadata frameworks — all with minimal technical intervention.
+## Purpose
 
----
+Libraries are increasingly tasked with collecting and managing non-traditional digital content, such as social media commentary, community stories, public engagement data, and born-digital zines, podcasts, or videos. These materials often lack predefined metadata standards or require custom schemas that support local or civic priorities.
 
-## 🎯 Who It's For
+MetaCraft Pro addresses this challenge by enabling librarians and information professionals to define metadata schemas using natural language, reducing technical barriers while preserving transparency and interoperability.
 
-- **Public Libraries** running outreach or digital literacy programs  
-- **Academic and Special Collections** managing new media, datasets, or community archives  
-- **Library Technologists** building or mapping metadata to digital systems  
-- **Archivists** structuring born-digital content  
-- **Information Professionals** creating AI-aligned workflows rooted in ethics and context
+## Example Use Case
 
----
+Prompt:
 
-## 🧠 What It Does
+Collect and organize recent tweets and news articles on Indigenous water stewardship for public library education materials.
 
-> ✍️ _"Collect and organize recent tweets and news articles on Indigenous water stewardship for public library education materials."_
+Generated Schema Output:
 
-✅ **MetaCraft Pro** interprets this prompt, calls an LLM for domain-specific schema suggestions, enriches results using spaCy NLP and internal logic, and outputs a ready-to-use metadata schema in JSON or BigQuery format.
+```json
+[
+  {"name": "id", "type": "STRING"},
+  {"name": "timestamp", "type": "STRING"},
+  {"name": "source_platform", "type": "STRING"},
+  {"name": "author", "type": "STRING"},
+  {"name": "region", "type": "STRING"},
+  {"name": "theme", "type": "STRING"},
+  {"name": "intended_audience", "type": "STRING"}
+]
+```
 
-### Agentic Workflow
+The schema can be exported in formats compatible with BigQuery, JSON Schema, or ElasticSearch.
 
-1. **Plain-text request**
-2. **LLM call (OpenAI or Claude)** to suggest useful fields
-3. **spaCy NLP** to extract context-aware keywords
-4. **Agent decisions**: required fields (e.g. `id`, `timestamp`, `region`)
-5. **Schema output**: ready for BigQuery, Elastic, JSON Schema, or MARC mapping
+## Features
 
----
+- Plain-language input describing data collection needs
+- OpenAI or Claude-powered LLM processing (user configurable)
+- Named entity and keyword validation using spaCy
+- Schema post-processing with required field injection and metadata normalization
+- Configurable output to JSON Schema, BigQuery, or ElasticSearch mappings
+- Transparent agentic decision logging
+- Library-focused vocabulary enrichment
+- Modular and extensible Python architecture
+- Optional GCP integrations (BigQuery schema loader, logging)
 
-## ✅ Features
-
-- 🤖 OpenAI + Claude support (easily switch between)
-- 🧠 spaCy-enhanced field validation
-- 📂 Export to BigQuery or JSON Schema
-- 🔍 Transparent logging of agent decisions
-- ✍️ Local save and versioning of schema files
-- 🛡️ Rule-based enhancement (e.g. auto-add source metadata)
-- 🔌 Modular and extensible for your ILS, DAM, or archive platform
-- 🧪 Built-in unit tests and config layer
-- ☁️ GCP-compatible: BigQuery, Cloud Logging ready
-
----
-
-## 📊 Real Use Case Examples
-
-| Library Task | Example Prompt | Schema Output |
-|--------------|----------------|----------------|
-| Youth Programming | _"Collect Instagram feedback about teen-led events at the downtown branch."_ | `user_id`, `event_name`, `feedback_text`, `emoji_count`, `sentiment_score` |
-| Digital Humanities | _"Metadata for activist zines on housing justice for a university archive."_ | `title`, `creator`, `publication_date`, `theme_tags`, `license`, `location` |
-| Civic Participation | _"Schema for cataloging feedback on budget proposals from seniors."_ | `participant_age`, `proposal_id`, `concerns`, `recommendation_type`, `satisfaction_rating` |
-
----
-
-## 📁 Installation
+## Installation
 
 ```bash
 git clone https://github.com/n1conroy/metacraft.git
@@ -68,4 +54,44 @@ source venv/bin/activate
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 python app.py
+```
 
+You will be prompted to enter your API key and a natural language request. The resulting schema will be printed and optionally saved.
+
+## Use Cases
+
+| Context | Prompt | Output Fields |
+|--------|--------|---------------|
+| Community Programming | Collect Instagram feedback about youth-led library events | user_id, event_name, comment_text, sentiment, timestamp |
+| Special Collections | Metadata for a digital exhibit of housing justice zines from the 1980s | title, author, publication_date, theme, region, format |
+| Civic Data | Collect public Facebook comments about accessibility in local parks | source_platform, location, issue_type, sentiment, suggestion |
+
+## Roadmap
+
+MetaCraft Pro is the first tool in an ongoing development of LLM-based, agent-driven library utilities. Additional modules in progress:
+
+- PromptForge: authoring and cataloguing reusable prompts for teaching, reference, and metadata
+- QueryTuner: translating librarian reference queries to ElasticSearch, SQL, or linked data
+- AgentAtlas: visualization of agent workflows, decisions, and schema traceability
+- StackTrace: hybrid discovery interface combining LLMs with local knowledge sources and open APIs
+
+## Collaboration
+
+This project welcomes collaboration from library and information professionals. Contributions may include:
+
+- Vocabulary enrichment (Dublin Core, schema.org, LCSH mappings)
+- Metadata mapping (to MARC, MODS, RDF)
+- Platform integration (Omeka, Islandora, ArchivesSpace)
+- Pilot use cases and applied workshops
+
+To contribute or collaborate, please contact nadia.k.conroy@gmail.com or open a GitHub issue.
+
+## About
+
+Developer: Nadia Conroy, PhD, MLIS  
+Background: Information science researcher, former staff at Toronto Public Library, 8 years in machine learning and data architecture.
+
+MetaCraft Pro was developed to support public and research libraries as they navigate the adoption of LLMs and autonomous agents. It is built to provide transparency, agency, and interoperability in AI-supported metadata workflows.
+
+Repository: https://github.com/n1conroy/metacraft  
+License: MIT (or TBD)
