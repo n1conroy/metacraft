@@ -61,10 +61,11 @@ Using advanced agents built on LLMs, NLP, and transparent rule-based logic, Meta
 ## 📁 Installation
 
 ```bash
-git clone https://github.com/yourname/metacraft-pro.git
-cd metacraft-pro
+git clone https://github.com/n1conroy/metacraft.git
+cd metacraft
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 python app.py
+
