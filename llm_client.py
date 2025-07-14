@@ -1,44 +1,37 @@
 # llm_client.py
-# Provides abstraction for OpenAI or Claude completions.
+import os
+import logging
 
-import requests
-import config
-import openai
+logger = logging.getLogger("metacraft.llm_client")
 
 class LLMClient:
     def __init__(self):
-        self.provider = config.LLM_PROVIDER
-        self.api_key = config.API_KEY
+        self.provider = "openai"
+        self.api_key = os.getenv("OPENAI_API_KEY")
 
-    def complete(self, prompt):
-        if self.provider == "openai":
-            return self._openai(prompt)
-        elif self.provider == "claude":
-            return self._claude(prompt)
-        return self._mock(prompt)
+    def set_provider(self, provider_name: str):
+        self.provider = provider_name.lower()
+        logger.info(f"LLM provider set to: {self.provider}")
+        if self.provider == "claude":
+            self.api_key = os.getenv("CLAUDE_API_KEY")
+        elif self.provider == "openai":
+            self.api_key = os.getenv("OPENAI_API_KEY")
+        else:
+            logger.warning(f"Unknown LLM provider '{self.provider}', defaulting to OpenAI")
+            self.provider = "openai"
+            self.api_key = os.getenv("OPENAI_API_KEY")
 
-    def _openai(self, prompt):
-        openai.api_key = self.api_key
-        response = openai.ChatCompletion.create(
-            model="gpt-4o",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.4,
-            max_tokens=600
-        )
-        return response["choices"][0]["message"]["content"]
-
-    def _claude(self, prompt):
-        headers = {
-            "x-api-key": self.api_key,
-            "content-type": "application/json"
-        }
-        data = {
-            "model": "claude-2.1",
-            "prompt": f"Human: {prompt}\nAssistant:",
-            "max_tokens_to_sample": 600
-        }
-        response = requests.post("https://api.anthropic.com/v1/complete", headers=headers, json=data)
-        return response.json().get("completion", "")
-
-    def _mock(self, prompt):
-        return f"Mock response for prompt: {prompt}"
+    def call(self, prompt: str):
+        # For demonstration, return a hardcoded example
+        # Replace this stub with real API calls to OpenAI or Claude
+        logger.debug(f"LLM call with prompt: {prompt}")
+        example_schema = [
+            {"name": "id", "type": "STRING"},
+            {"name": "timestamp", "type": "STRING"},
+            {"name": "source_platform", "type": "STRING"},
+            {"name": "author", "type": "STRING"},
+            {"name": "region", "type": "STRING"},
+            {"name": "theme", "type": "STRING"},
+            {"name": "intended_audience", "type": "STRING"},
+        ]
+        return example_schema
