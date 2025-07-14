@@ -1,4 +1,4 @@
-# llm_client.py
+# utils/llm_client.py
 import os
 import logging
 
@@ -22,8 +22,6 @@ class LLMClient:
             self.api_key = os.getenv("OPENAI_API_KEY")
 
     def call(self, prompt: str):
-        # For demonstration, return a hardcoded example
-        # Replace this stub with real API calls to OpenAI or Claude
         logger.debug(f"LLM call with prompt: {prompt}")
         example_schema = [
             {"name": "id", "type": "STRING"},
